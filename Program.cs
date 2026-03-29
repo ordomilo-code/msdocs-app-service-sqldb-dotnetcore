@@ -11,28 +11,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-<<<<<<< HEAD
-    builder.Services.AddDbContext<MyDatabaseContext>(options =>
-        options.UseSqlServer(developmentConnectionString));
-    builder.Services.AddDistributedMemoryCache();
-}
-else
-{
-    builder.Services.AddDbContext<MyDatabaseContext>(options =>
-        options.UseSqlServer(builder.Configuration.GetConnectionString("AZURE_SQL_CONNECTIONSTRING")));
-    builder.Services.AddStackExchangeRedisCache(options =>
-    {
-    options.Configuration = builder.Configuration["AZURE_REDIS_CONNECTIONSTRING"];
-    options.InstanceName = "SampleInstance";
-    });
-}
-
-// Add services to the container.
-builder.Services.AddControllersWithViews();
-
-// Add App Service logging
-builder.Logging.AddAzureWebAppDiagnostics();
-=======
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Environment.IsDevelopment()
@@ -81,7 +59,6 @@ builder.Services
     });
 
 builder.Logging.AddAzureWebAppDiagnostics();
->>>>>>> 6bc6bff (create init api acount and db migration base fonctionnel)
 
 var app = builder.Build();
 
