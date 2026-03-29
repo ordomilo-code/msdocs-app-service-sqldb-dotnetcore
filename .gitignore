@@ -352,6 +352,12 @@ MigrationBackup/
 # Azure Developer CLI
 .azure
 
+# Local tooling/cache
+/.dist/
+
+# Generated EF migrations bundle used during Azure packaging
+/migrationsbundle
+
 # Visual Studio Code
 .vscode
 

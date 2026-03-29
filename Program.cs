@@ -5,8 +5,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add database context and cache
 if(builder.Environment.IsDevelopment())
 {
+    var developmentConnectionString = DevelopmentConnectionStringSelector.GetDevelopmentConnectionString(builder.Configuration);
+
     builder.Services.AddDbContext<MyDatabaseContext>(options =>
-        options.UseSqlServer(builder.Configuration.GetConnectionString("MyDbConnection")));
+        options.UseSqlServer(developmentConnectionString));
     builder.Services.AddDistributedMemoryCache();
 }
 else
@@ -29,6 +31,11 @@ builder.Logging.AddAzureWebAppDiagnostics();
 
 var app = builder.Build();
 
+if (app.Environment.IsDevelopment())
+{
+    await DevelopmentDatabaseInitializer.InitializeAsync(app.Services, app.Configuration, app.Logger);
+}
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -48,4 +55,4 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Todos}/{action=Index}/{id?}");
 
-app.Run();
+await app.RunAsync();
