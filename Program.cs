@@ -88,7 +88,6 @@ app.UseExceptionHandler(errorApp =>
 if (!app.Environment.IsDevelopment())
 {
     app.UseHsts();
-    await ProductionDatabaseMigrator.MigrateAsync(app.Services, app.Logger);
 }
 
 if (app.Environment.IsDevelopment())
